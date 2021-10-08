@@ -1,0 +1,64 @@
+﻿@model LocationSearchEngine.Models.VenueModel
+
+<h2>Search for new Location</h2>
+@{
+    Layout = null;
+}<br/>
+<br />
+<hr />
+<br />
+@using (Html.BeginForm("GetNewLocation", "Home", FormMethod.Post))
+{
+    <div id="myRadioGroup">
+        <div class="row">
+            <div class="col-md-3">
+                @Html.DisplayName("Co-ordinates") <input type="radio" name="type" checked="checked" value="2" />
+            </div>
+            <div class="col-md-3">
+                @Html.DisplayName("Search by location or object") <input type="radio" name="type" value="3" />
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <div id="Type2" class="desc">
+                    @Html.DisplayName("Latitude")
+                    @Html.TextBoxFor(m => m.latitude, new { @class = "form-control" })
+                    @Html.DisplayName("Longitude")
+                    @Html.TextBoxFor(m => m.longitude, new { @class = "form-control" })
+
+                </div>
+                <div id="Type3" class="desc" style="display: none;">
+                    @Html.DisplayName("Place")
+                    @Html.TextBoxFor(m => m.near, new { @class = "form-control" })
+                    @Html.DisplayName("Object")
+                    @Html.TextBoxFor(m => m.venueText, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <div class="submit-actions">
+
+                    <button rel="tootlip" id="Search" class="btn btn-default" type="submit">Search</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+    <script>
+
+        $(document).ready(function () {
+            $("input[name$='type']").click(function () {
+                var test = $(this).val();
+
+                $("div.desc").hide();
+                $("#Type" + test).show();
+            });
+        });
+
+    </script>

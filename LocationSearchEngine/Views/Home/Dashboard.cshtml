@@ -1,0 +1,84 @@
+﻿@model LocationSearchEngine.Models.VenueModel
+
+
+<h2>Dashboard</h2>
+
+@using (Html.BeginForm("Dashboard", "Home", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form context-search">
+
+                <div class="input-group" style="display: inline;">
+                    @Html.TextBox("SearchText", "", new { @class = "form-control", @placeholder = "Search" })
+                    <span>
+                        <button class="btn btn-default Search" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                    </span>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-1">
+            <div class="text-right content-actions">
+                <a class="btn btn-default active-green forward" href="@Url.Action("Dashboard","Home")">Refresh</a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="text-right content-actions">
+                <a class="btn btn-default NewLocation">Search For New Locations</a>
+            </div>
+        </div>
+    </div>
+}
+<br />
+<br />
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayName("Address")
+        </th>
+        <th>
+
+        </th>
+    </tr>
+
+    @foreach (var item in Model.venueList)
+    {
+        <tr>
+            <th>
+                @item.Name
+            </th>
+            <th>
+                @item.Address
+            </th>
+
+            <td>
+                <img src="@Url.Content(item.ImagePath)" alt="Image" />
+            </td>
+
+        </tr>
+    }
+
+</table>
+
+<script>
+ 
+    $('.NewLocation').on('click', function () {
+        $.ajax({
+              type: "GET",
+              url: '@Url.Action("GetNewLocation", "Home")',
+              data: {
+
+              },
+            success: function (data) {
+
+                $('#PartialContainer').html(data);
+                $('#PartialModal').modal('show');
+            }
+        });
+    })
+
+</script>
